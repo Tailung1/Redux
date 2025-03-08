@@ -88,7 +88,7 @@ console.log(store.getState());
 
 store.dispatch(requestLoan(5000, "buy a car"));
 
-store.dispatch(withdraw(20000))
+store.dispatch(withdraw(20000));
 
 console.log(store.getState());
 store.dispatch(payLoan());
