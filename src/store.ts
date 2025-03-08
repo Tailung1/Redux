@@ -1,4 +1,4 @@
-import { createStore, Action } from "redux";
+import { createStore, Action, combineReducers } from "redux";
 
 interface IAccountState {
   balance: number;
@@ -19,17 +19,46 @@ interface RequestLoan extends Action<"account/requestLoan"> {
 }
 interface PayLoan extends Action<"account/payLoan"> {}
 
+type AccountActions =
+  | DepositAction
+  | WithdrawAction
+  | RequestLoan
+  | PayLoan;
+
 const AccountInitialState = {
   balance: 0,
   loan: 0,
   loanPurpose: "",
 };
 
-type AccountActions =
-  | DepositAction
-  | WithdrawAction
-  | RequestLoan
-  | PayLoan;
+interface ICostumerState {
+  fullName: string;
+  nationalID: string;
+  createdAT: string;
+}
+
+const CostumerInitialState = {
+  fullName: "",
+  nationalID: "",
+  createdAT: "",
+};
+
+interface createCostumerAction
+  extends Action<"costumer/createCostumer"> {
+  payload: {
+    fullName: string;
+    nationalID: string;
+    createdAT: string;
+  };
+}
+interface updateCostumerNameAction
+  extends Action<"costumer/updateName"> {
+  payload: string;
+}
+
+type costumerActionsTypes =
+  | createCostumerAction
+  | updateCostumerNameAction;
 
 function accountReducer(
   state: IAccountState = AccountInitialState,
@@ -60,7 +89,34 @@ function accountReducer(
   }
 }
 
-const store = createStore(accountReducer);
+function costumerReducer(
+  state: ICostumerState = CostumerInitialState,
+  action: costumerActionsTypes
+) {
+  switch (action.type) {
+    case "costumer/createCostumer":
+      return {
+        ...state,
+        fullName: action.payload.fullName,
+        nationalID: action.payload.nationalID,
+        createdAT: action.payload.createdAT,
+      };
+    case "costumer/updateName":
+      return {
+        ...state,
+        fullName: action.payload,
+      };
+    default:
+      return state;
+  }
+}
+
+const rootReducer = combineReducers({
+  account: accountReducer,
+  costumer: costumerReducer,
+});
+
+const store = createStore(rootReducer);
 
 function deposit(amount: number): DepositAction {
   return { type: "account/deposit", payload: amount };
