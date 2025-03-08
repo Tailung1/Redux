@@ -1,5 +1,6 @@
 import { createStore, Action, combineReducers } from "redux";
 
+
 interface IAccountState {
   balance: number;
   loan: number;
@@ -54,7 +55,9 @@ interface createCostumerAction
 
 interface updateCostumerNameAction
   extends Action<"costumer/updateName"> {
-  payload: string;
+  payload: {
+    fullName:string
+  };
 }
 
 type costumerActionsTypes =
@@ -89,6 +92,8 @@ function accountReducer(
       return state;
   }
 }
+
+
 
 function costumerReducer(
   state: ICostumerState = CostumerInitialState,
@@ -154,10 +159,10 @@ function createCostumer(
   };
 }
 
-function updateName(fullName: string) {
+function updateName(fullName: string):updateCostumerNameAction {
   return {
     type: "costumer/updateName",
-    payload: { fullName },
+    payload:  {fullName} ,
   };
 }
 
@@ -174,5 +179,7 @@ store.dispatch(withdraw(20000));
 
 console.log(store.getState());
 store.dispatch(payLoan());
+
+store.dispatch(updateName("taso"));
 
 console.log(store.getState());
