@@ -18,7 +18,7 @@ function accountReducer(state = AccountInitialState, action) {
         ...state,
         balance: state.balance + action.payload.amount,
         loan: action.payload.amount,
-        purpose: action.payload.purpose,
+        loanPurpose: action.payload.purpose,
       };
     case "account/payLoan":
       return {
@@ -34,16 +34,21 @@ function accountReducer(state = AccountInitialState, action) {
 
 const store = createStore(accountReducer);
 
-store.dispatch({ type: "account/deposit", payload: 100000 });
+function deposit(amount) {
+    return {type:"account/deposit",payload:amount}
+}
 
+function withdraw(amount) {
+  return { type: "account/withdraw", payload: amount };
+}
+
+function requestLoan(amount,purpose) {
+  return { type: "account/requestLoan", payload: {amount,purpose} };
+}
+
+store.dispatch(deposit(100000))
 console.log(store.getState());
 
-store.dispatch({
-  type: "account/requestLoan",
-  payload: {
-    amount: 25000,
-    purpose: "buy a car",
-  },
-});
+store.dispatch(requestLoan(5000, "buy a car"));
 
 console.log(store.getState());
