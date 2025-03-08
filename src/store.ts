@@ -1,6 +1,6 @@
 import { createStore, Action } from "redux";
 
-interface IAccount {
+interface IAccountState {
   balance: number;
   loan: number;
   loanPurpose: string;
@@ -14,9 +14,10 @@ interface WithdrawAction extends Action<"account/withdraw"> {
 interface RequestLoan extends Action<"account/requestLoan"> {
   payload: {
     amount: number;
-    loanPurpose: string;
+    purpose: string;
   };
 }
+interface PayLoan extends Action<"account/payLoan"> {}
 
 const AccountInitialState = {
   balance: 0,
@@ -24,10 +25,14 @@ const AccountInitialState = {
   loanPurpose: "",
 };
 
-type AccountActions = DepositAction | WithdrawAction | RequestLoan;
+type AccountActions =
+  | DepositAction
+  | WithdrawAction
+  | RequestLoan
+  | PayLoan;
 
 function accountReducer(
-  state: IAccount = AccountInitialState,
+  state: IAccountState = AccountInitialState,
   action: AccountActions
 ) {
   switch (action.type) {
@@ -57,18 +62,24 @@ function accountReducer(
 
 const store = createStore(accountReducer);
 
-function deposit(amount) {
+function deposit(amount: number): DepositAction {
   return { type: "account/deposit", payload: amount };
 }
 
-function withdraw(amount) {
+function withdraw(amount: number): WithdrawAction {
   return { type: "account/withdraw", payload: amount };
 }
 
-function requestLoan(amount, purpose) {
+function requestLoan(amount: number, purpose: string): RequestLoan {
   return {
     type: "account/requestLoan",
     payload: { amount, purpose },
+  };
+}
+
+function payLoan(): PayLoan {
+  return {
+    type: "account/payLoan",
   };
 }
 
@@ -76,5 +87,10 @@ store.dispatch(deposit(100000));
 console.log(store.getState());
 
 store.dispatch(requestLoan(5000, "buy a car"));
+
+store.dispatch(withdraw(20000))
+
+console.log(store.getState());
+store.dispatch(payLoan());
 
 console.log(store.getState());
