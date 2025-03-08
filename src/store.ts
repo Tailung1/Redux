@@ -51,6 +51,7 @@ interface createCostumerAction
     createdAT: string;
   };
 }
+
 interface updateCostumerNameAction
   extends Action<"costumer/updateName"> {
   payload: string;
@@ -138,6 +139,31 @@ function payLoan(): PayLoan {
     type: "account/payLoan",
   };
 }
+
+function createCostumer(
+  fullName: string,
+  nationalID: string
+): createCostumerAction {
+  return {
+    type: "costumer/createCostumer", // No `as const` needed now
+    payload: {
+      fullName,
+      nationalID,
+      createdAT: new Date().toISOString(),
+    },
+  };
+}
+
+function updateName(fullName: string) {
+  return {
+    type: "costumer/updateName",
+    payload: { fullName },
+  };
+}
+
+store.dispatch<createCostumerAction>(
+  createCostumer("chicha", "31313")
+);
 
 store.dispatch(deposit(100000));
 console.log(store.getState());
