@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { UseDispatch } from "react-redux";
 import { createCostumer } from "./costumerSlice";
+import { AppDispatch } from "../../store";
 
 export default function CreateCostumer() {
   const [fullName, setFullName] = useState<string>("");
   const [nationalID, setNationalId] = useState<string>("");
 
   const costumer = useSelector((store: RootState) => store.costumer);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleCreateCostumer = () => {
     if (!fullName || !nationalID) return;
