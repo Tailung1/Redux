@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+
 import { createCostumer } from "./costumerSlice";
 import { AppDispatch } from "../../store";
 
@@ -8,7 +8,6 @@ export default function CreateCostumer() {
   const [fullName, setFullName] = useState<string>("");
   const [nationalID, setNationalId] = useState<string>("");
 
-  const costumer = useSelector((store: RootState) => store.costumer);
   const dispatch = useDispatch<AppDispatch>();
 
   const handleCreateCostumer = () => {
@@ -16,7 +15,6 @@ export default function CreateCostumer() {
 
     dispatch(createCostumer(fullName, nationalID));
   };
-  console.log(costumer);
 
   return (
     <div>

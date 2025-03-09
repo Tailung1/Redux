@@ -4,13 +4,21 @@ import BalanceDisplay from "./features/accounts/BalanceDisplay";
 import CreateCostumer from "./features/costumers/CreateCostumer";
 import Costumer from "./features/costumers/Costumer";
 
+import { rootState } from "./store";
+import { useSelector } from "react-redux";
+
 function App() {
+
+      const costumer = useSelector(
+        (store: rootState) => store.costumer
+      );
+
   return (
     <>
-      <CreateCostumer />
-      {/* <Costumer />
-      <BalanceDisplay />
-      <AccountOperations /> */}
+    {costumer.fullName?<Costumer />:<CreateCostumer />}
+
+      {/* <BalanceDisplay />
+      <AccountOperations />  */}
     </>
   );
 }
