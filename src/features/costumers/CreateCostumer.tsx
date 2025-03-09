@@ -1,11 +1,15 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
 export default function CreateCostumer() {
   const [fullName, setFullName] = useState<string>("");
   const [nationalID, setNationalId] = useState<string | number>("");
 
-  const handleCreateCostumer=()=> 
 
+  const costumer=useSelector(store=>store.costumer)
+
+  const handleCreateCostumer=()=> {}
+console.log(costumer)
 
   return (
     <div>
@@ -29,7 +33,7 @@ export default function CreateCostumer() {
             onChange={(e) => setNationalId(e.target.value)}
           />
         </div>
-        <button onClick={}>Create new User</button>
+        <button onClick={handleCreateCostumer}>Create new User</button>
       </div>
     </div>
   );
