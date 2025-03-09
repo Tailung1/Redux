@@ -1,7 +1,9 @@
-import React from 'react'
+import { useSelector } from "react-redux";
+import { rootState } from "../../store";
 
 export default function Costumer() {
-  return (
-    <div>Costumer</div>
-  )
+  const costumerName = useSelector((store:rootState) => store.costumer.fullName);
+  return <div>
+    <h1>Welcome "{costumerName}"</h1>
+  </div>;
 }

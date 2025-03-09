@@ -8,17 +8,20 @@ import { rootState } from "./store";
 import { useSelector } from "react-redux";
 
 function App() {
-
-      const costumer = useSelector(
-        (store: rootState) => store.costumer
-      );
+  const costumer = useSelector((store: rootState) => store.costumer);
 
   return (
     <>
-    {costumer.fullName?<Costumer />:<CreateCostumer />}
+      {costumer.fullName ? (
+        <div>
+          {" "}
+          <Costumer /> <BalanceDisplay />{" "}
+        </div>
+      ) : (
+        <CreateCostumer />
+      )}
 
-      {/* <BalanceDisplay />
-      <AccountOperations />  */}
+      {/* <AccountOperations />   */}
     </>
   );
 }
