@@ -1,14 +1,21 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
+import { UseDispatch } from "react-redux";
+import { createCostumer } from "./costumerSlice";
 
 export default function CreateCostumer() {
   const [fullName, setFullName] = useState<string>("");
-  const [nationalID, setNationalId] = useState<string | number>("");
+  const [nationalID, setNationalId] = useState<string>("");
 
   const costumer = useSelector((store: RootState) => store.costumer);
+  const dispatch = useDispatch();
 
-  const handleCreateCostumer = () => {};
+  const handleCreateCostumer = () => {
+    if (!fullName || !nationalID) return;
+
+    dispatch(createCostumer(fullName, nationalID));
+  };
   console.log(costumer);
 
   return (
