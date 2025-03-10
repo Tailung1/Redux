@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { deposit } from "./accountSlice";
+import { deposit, withdraw } from "./accountSlice";
 import { AppDispatch } from "../../store";
 
 export default function AccountOperations() {
@@ -19,9 +19,15 @@ export default function AccountOperations() {
   const handleDeposit = () => {
     if (!depositAmount) return;
     dispatch(deposit(+depositAmount));
+    setDepositAmount("");
   };
 
-  const handleWithdraw = () => {};
+  const handleWithdraw = () => {
+    if (!withdrawAmount) return;
+
+    dispatch(withdraw(+withdrawAmount));
+    setWithdrawAmount("");
+  };
 
   const handleRequestLoan = () => {};
 
@@ -40,6 +46,7 @@ export default function AccountOperations() {
               onChange={(e) => setDepositAmount(+e.target.value)}
             />
           </div>
+
           <select
             value={currency}
             onChange={(e) => setCurrency(e.target.value)}
@@ -48,12 +55,18 @@ export default function AccountOperations() {
             <option value={"EUR"}>EUR</option>
             <option value={"GBP"}>GBP</option>
           </select>
+
           <button onClick={handleDeposit}>Deposit</button>
         </div>
+
         <div>
           <label>Withdraw</label>
-          <input type='number' />
-          <button>Withdraw</button>
+          <input
+            type='number'
+            value={withdrawAmount}
+            onChange={(e) => setWithdrawAmount(e.target.value)}
+          />
+          <button onClick={handleWithdraw}>Withdraw</button>
         </div>
         <div>
           <label>RequestLoan</label>
