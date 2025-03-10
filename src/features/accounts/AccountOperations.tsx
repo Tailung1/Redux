@@ -1,11 +1,16 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deposit, payLoan, requestLoan, withdraw } from "./accountSlice";
+import {
+  deposit,
+  payLoan,
+  requestLoan,
+  withdraw,
+} from "./accountSlice";
 import { AppDispatch, rootState } from "../../store";
 
 export default function AccountOperations() {
   const dispatch = useDispatch<AppDispatch>();
-  const account = useSelector((store:rootState) => store.account);
+  const account = useSelector((store: rootState) => store.account);
 
   const [depositAmount, setDepositAmount] = useState<string | number>(
     ""
@@ -39,11 +44,10 @@ export default function AccountOperations() {
   };
 
   const handlePayLoan = () => {
-    dispatch(payLoan())
+    dispatch(payLoan());
   };
+  console.log(account)
 
-
-console.log(account)
   return (
     <div>
       <h2>Your account operations</h2>

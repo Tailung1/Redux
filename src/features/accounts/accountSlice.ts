@@ -38,8 +38,11 @@ export default function accountReducer(
   switch (action.type) {
     case "account/deposit":
       return { ...state, balance: state.balance + action.payload };
+
     case "account/withdraw":
+      if (state.balance < action.payload) return state;
       return { ...state, balance: state.balance - action.payload };
+
     case "account/requestLoan":
       if (state.loan > 0) return state;
       return {
@@ -48,13 +51,16 @@ export default function accountReducer(
         loan: action.payload.amount,
         loanPurpose: action.payload.purpose,
       };
+
     case "account/payLoan":
+      if (state.balance < state.loan) return state;
       return {
         ...state,
         loan: 0,
         loanPurpose: "",
         balance: state.balance - state.loan,
       };
+
     default:
       return state;
   }
@@ -68,7 +74,10 @@ export function withdraw(amount: number): WithdrawAction {
   return { type: "account/withdraw", payload: amount };
 }
 
-export function requestLoan(amount: number, purpose: string): RequestLoan {
+export function requestLoan(
+  amount: number,
+  purpose: string
+): RequestLoan {
   return {
     type: "account/requestLoan",
     payload: { amount, purpose },
