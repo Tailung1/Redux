@@ -15,13 +15,11 @@ function App() {
       {costumer.fullName ? (
         <div>
           {" "}
-          <Costumer /> <BalanceDisplay />{" "}
+          <Costumer /> <BalanceDisplay /> <AccountOperations />{" "}
         </div>
       ) : (
         <CreateCostumer />
       )}
-
-      {/* <AccountOperations />   */}
     </>
   );
 }
