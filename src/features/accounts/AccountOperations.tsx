@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { deposit, withdraw } from "./accountSlice";
-import { AppDispatch } from "../../store";
+import { useDispatch, useSelector } from "react-redux";
+import { deposit, payLoan, requestLoan, withdraw } from "./accountSlice";
+import { AppDispatch, rootState } from "../../store";
 
 export default function AccountOperations() {
   const dispatch = useDispatch<AppDispatch>();
+  const account = useSelector((store:rootState) => store.account);
 
   const [depositAmount, setDepositAmount] = useState<string | number>(
     ""
@@ -29,10 +30,20 @@ export default function AccountOperations() {
     setWithdrawAmount("");
   };
 
-  const handleRequestLoan = () => {};
+  const handleRequestLoan = () => {
+    if (!loanAmount || !loanPurpose) return;
 
-  const handlePayLoan = () => {};
+    dispatch(requestLoan(+loanAmount, loanPurpose));
+    setLoanAmount("");
+    setLoanPurpose("");
+  };
 
+  const handlePayLoan = () => {
+    dispatch(payLoan())
+  };
+
+
+console.log(account)
   return (
     <div>
       <h2>Your account operations</h2>
@@ -70,11 +81,19 @@ export default function AccountOperations() {
         </div>
         <div>
           <label>RequestLoan</label>
-          <input type='number' />
-          <input type='number' />
-          <button>RequestLoan</button>
+          <input
+            type='number'
+            value={loanAmount}
+            onChange={(e) => setLoanAmount(e.target.value)}
+          />
+          <input
+            type='text'
+            value={loanPurpose}
+            onChange={(e) => setLoanPurpose(e.target.value)}
+          />
+          <button onClick={handleRequestLoan}>RequestLoan</button>
         </div>
-        <button>PayLoan</button>
+        <button onClick={handlePayLoan}>PayLoan</button>
       </div>
     </div>
   );
