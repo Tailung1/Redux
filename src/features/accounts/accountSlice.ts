@@ -5,7 +5,7 @@ interface IAccountState {
   balance: number;
   loan: number;
   loanPurpose: string;
-  isLoading:boolean;
+  isLoading: boolean;
 }
 export interface DepositAction extends Action<"account/deposit"> {
   payload: number;
@@ -43,7 +43,11 @@ export default function accountReducer(
 ) {
   switch (action.type) {
     case "account/deposit":
-      return { ...state, balance: state.balance + action.payload,isLoading:false };
+      return {
+        ...state,
+        balance: state.balance + action.payload,
+        isLoading: false,
+      };
 
     case "account/withdraw":
       if (state.balance < action.payload) return state;
@@ -79,7 +83,6 @@ export function deposit(
   amount: number,
   currency: string
 ): ThunkAction<void, unknown, any, DepositAction> {
-    
   if (currency === "USD") {
     return (dispatch: any) =>
       dispatch({ type: "account/deposit", payload: amount });
@@ -124,8 +127,6 @@ export function requestLoan(
 
 export function payLoan(): PayLoan {
   return {
-    type:  "account/payLoan",
+    type: "account/payLoan",
   };
 }
-
-

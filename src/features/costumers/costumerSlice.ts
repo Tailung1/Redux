@@ -30,10 +30,7 @@ type costumerActionsTypes =
   | createCostumerAction
   | updateCostumerNameAction;
 
-
-
-
- export default  function costumerReducer(
+export default function costumerReducer(
   state: ICostumerState = CostumerInitialState,
   action: costumerActionsTypes
 ) {
@@ -54,8 +51,6 @@ type costumerActionsTypes =
       return state;
   }
 }
-
-
 
 export function createCostumer(
   fullName: string,
