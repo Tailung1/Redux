@@ -8,10 +8,11 @@ import {
 } from "./accountSlice";
 import { AppDispatch, rootState } from "../../store";
 
-
 export default function AccountOperations() {
   const dispatch = useDispatch<AppDispatch>();
-  const account = useSelector((store: rootState) => store.account);
+  let { isLoading } = useSelector(
+    (store: rootState) => store.account
+  );
 
   const [depositAmount, setDepositAmount] = useState<string | number>(
     ""
@@ -25,7 +26,8 @@ export default function AccountOperations() {
 
   const handleDeposit = () => {
     if (!depositAmount) return;
-    dispatch(deposit(+depositAmount,currency));
+
+    dispatch(deposit(+depositAmount, currency));
     setDepositAmount("");
   };
 
@@ -47,7 +49,6 @@ export default function AccountOperations() {
   const handlePayLoan = () => {
     dispatch(payLoan());
   };
-  console.log(account)
 
   return (
     <div>
@@ -72,7 +73,9 @@ export default function AccountOperations() {
             <option value={"GBP"}>GBP</option>
           </select>
 
-          <button onClick={handleDeposit}>Deposit</button>
+          <button onClick={handleDeposit} disabled={isLoading}>
+            {isLoading ? "Converting" : "Deposit"}
+          </button>
         </div>
 
         <div>
