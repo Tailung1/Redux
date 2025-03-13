@@ -27,28 +27,35 @@ const accountSlice = createSlice({
         state.balance - action.payload;
       }
     },
-    requestLoan(state, action) {
-      if (state.loan > 0) return;
-      state.balance += action.payload.amount;
-      state.loan = action.payload.amount;
-      state.loanPurpose = action.payload.purpose;
+    requestLoan: {
+      prepare(amount, purpose) {
+        return { payload: { amount, purpose } };
+      },
+      reducer(state, action) {
+        if (state.loan > 0) return;
+        state.balance += action.payload.amount;
+        state.loan = action.payload.amount;
+        state.loanPurpose = action.payload.purpose;
+      },
     },
     payLoan(state) {
-        state.balance-=state.loan,
-        state.loanPurpose="";
-        state.loan=0;
+      (state.balance -= state.loan), (state.loanPurpose = "");
+      state.loan = 0;
     },
     convertCurrency(state) {
-        state.isLoading=true
-    }
+      state.isLoading = true;
+    },
   },
 });
-console.log(accountSlice)
-export const {deposit,withdraw,requestLoan,payLoan,convertCurrency}=accountSlice.actions
-export default accountSlice.reducer
 
-
-
+export const {
+  deposit,
+  withdraw,
+  requestLoan,
+  payLoan,
+  convertCurrency,
+} = accountSlice.actions;
+export default accountSlice.reducer;
 
 // export interface DepositAction extends Action<"account/deposit"> {
 //   payload: number;
