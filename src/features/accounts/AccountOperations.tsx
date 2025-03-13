@@ -6,7 +6,7 @@ import {
   requestLoan,
   withdraw,
 } from "./accountSlice";
-import { AppDispatch, rootState } from "../../store";
+import { AppDispatch, rootState } from "../../store.v2";
 
 export default function AccountOperations() {
   const dispatch = useDispatch<AppDispatch>();
