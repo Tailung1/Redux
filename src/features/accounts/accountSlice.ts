@@ -28,9 +28,8 @@ const accountSlice = createSlice({
       state.isLoading = false;
     },
     withdraw(state, action: PayloadAction<number>) {
-      if (state.balance < action.payload) return ;
-        state.balance -= action.payload;
-      
+      if (state.balance < action.payload) return;
+      state.balance -= action.payload;
     },
     requestLoan: {
       prepare(amount, purpose) {
@@ -62,8 +61,6 @@ export const {
 } = accountSlice.actions;
 
 export default accountSlice.reducer;
-
-
 
 // export interface DepositAction extends Action<"account/deposit"> {
 //   payload: number;
