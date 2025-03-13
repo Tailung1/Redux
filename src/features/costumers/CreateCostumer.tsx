@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { createCostumer } from "./costumerSlice";
+import { createCustomer } from "./costumerSlice";
 import { AppDispatch } from "../../store";
 
 export default function CreateCostumer() {
@@ -14,7 +14,7 @@ export default function CreateCostumer() {
   const handleCreateCostumer = () => {
     if (!fullName || !nationalID) return;
 
-    dispatch(createCostumer(fullName, nationalID));
+    dispatch(createCustomer(fullName, nationalID));
   };
 
   return (
