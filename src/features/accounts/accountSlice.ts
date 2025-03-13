@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface IAccountState {
   balance: number;
@@ -14,15 +14,20 @@ const initialState: IAccountState = {
   isLoading: false,
 };
 
+interface RequestLoanPayLoad {
+  amount: number;
+  purpose: string;
+}
+
 const accountSlice = createSlice({
   name: "account",
   initialState,
   reducers: {
-    deposit(state, action) {
+    deposit(state, action: PayloadAction<number>) {
       state.balance += action.payload;
       state.isLoading = false;
     },
-    withdraw(state, action) {
+    withdraw(state, action: PayloadAction<number>) {
       if (state.balance < action.payload) {
         state.balance - action.payload;
       }
@@ -31,7 +36,7 @@ const accountSlice = createSlice({
       prepare(amount, purpose) {
         return { payload: { amount, purpose } };
       },
-      reducer(state, action) {
+      reducer(state, action: PayloadAction<RequestLoanPayLoad>) {
         if (state.loan > 0) return;
         state.balance += action.payload.amount;
         state.loan = action.payload.amount;
