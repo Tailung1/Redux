@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { rootState } from "../../store.v2";
+import { rootState } from "../../store";
 
 export default function Costumer() {
   const costumerName = useSelector(

@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { rootState } from "../../store.v2";
+import { rootState } from "../../store";
 
 function formatCurrnecy(value: number) {
   return new Intl.NumberFormat("en-US", {

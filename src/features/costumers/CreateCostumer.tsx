@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { createCostumer } from "./costumerSlice";
-import { AppDispatch } from "../../store.v2";
+import { AppDispatch } from "../../store";
 
 export default function CreateCostumer() {
     
