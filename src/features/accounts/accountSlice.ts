@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { AppDispatch } from "../../store.v2";
 
 interface IAccountState {
   balance: number;
@@ -46,21 +47,45 @@ const accountSlice = createSlice({
       (state.balance -= state.loan), (state.loanPurpose = "");
       state.loan = 0;
     },
-    convertCurrency(state) {
+    convertingCurrency(state) {
       state.isLoading = true;
     },
   },
 });
 
-export const {
-  deposit,
-  withdraw,
-  requestLoan,
-  payLoan,
-  convertCurrency,
-} = accountSlice.actions;
+export const { withdraw, requestLoan, payLoan, convertingCurrency } =
+  accountSlice.actions;
 
 export default accountSlice.reducer;
+
+export function deposit(amount: number, currency: string) {
+  if (currency === "USD") {
+    return (dispatch: any) =>
+      dispatch({ type: "account/deposit", payload: amount });
+  }
+
+  return async function (dispatch: AppDispatch) {
+    // Dispatch an action indicating that conversion is happening
+    dispatch({ type: "account/convertingCurrency" });
+
+    try {
+      const response = await fetch(
+        `https://api.frankfurter.dev/v1/latest?base=${currency}&symbols=USD`
+      );
+      const data = await response.json();
+      console.log(data);
+
+      const convertedAmount = (amount * data.rates["USD"]).toFixed(2);
+      dispatch({
+        type: "account/deposit",
+        payload: parseFloat(convertedAmount),
+      });
+    } catch (error) {
+      console.error("Error fetching exchange rate:", error);
+      // Optionally dispatch an error action if needed
+    }
+  };
+}
 
 // export interface DepositAction extends Action<"account/deposit"> {
 //   payload: number;

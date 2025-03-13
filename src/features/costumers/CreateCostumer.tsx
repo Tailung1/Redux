@@ -5,7 +5,6 @@ import { createCustomer } from "./costumerSlice";
 import { AppDispatch } from "../../store";
 
 export default function CreateCostumer() {
-    
   const [fullName, setFullName] = useState<string>("");
   const [nationalID, setNationalId] = useState<string>("");
 
