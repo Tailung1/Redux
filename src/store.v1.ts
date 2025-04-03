@@ -1,4 +1,4 @@
-import { Action } from "redux";
+import { Action, createStore } from "redux";
 
 const initialState = {
   balance: 0,
@@ -14,7 +14,7 @@ interface withdrawAction extends Action {
   type: "account/withdraw";
   payload: number;
 }
-interface RequestLoanAction extends Action {
+interface requestLoanAction extends Action {
   type: "account/requestLoan";
   payload: {
     amount: number;
@@ -28,7 +28,7 @@ interface payLoanAction extends Action {
 type actionTypes =
   | depositAction
   | withdrawAction
-  | RequestLoanAction
+  | requestLoanAction
   | payLoanAction;
 
 export default function accountReducer(
@@ -54,3 +54,25 @@ export default function accountReducer(
       };
   }
 }
+const store = createStore(accountReducer);
+
+function deposit(amount: number): depositAction {
+  return { type: "account/deposit", payload: amount };
+}
+function withdraw(amount: number): withdrawAction {
+  return { type: "account/withdraw", payload: amount };
+}
+function requestLoan(
+  amount: number,
+  purpose: string
+): requestLoanAction {
+  return {
+    type: "account/requestLoan",
+    payload: { amount, purpose },
+  };
+}
+function payLoan(): payLoanAction {
+  return { type: "account/payLoan" };
+}
+
+console.log(store.getState());
