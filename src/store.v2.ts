@@ -1,17 +1,17 @@
-// import { createStore, combineReducers, applyMiddleware } from "redux";
-// import costumerReducer from "./features/costumers/costumerSlice";
-// import accountReducer from "./features/accounts/accountSlice";
-// import { thunk } from "redux-thunk";
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import costumerReducer from "./features/costumers/costumerSlice";
+import accountReducer from "./features/accounts/accountSlice";
+import { thunk } from "redux-thunk";
 
 
-// const rootReducer = combineReducers({
-//   account: accountReducer,
-//   costumer: costumerReducer,
-// });
+const rootReducer = combineReducers({
+  account: accountReducer,
+  costumer: costumerReducer,
+});
 
-// export type rootState = ReturnType<typeof rootReducer>;
-// export type AppDispatch = typeof store.dispatch;
+export type rootState = ReturnType<typeof rootReducer>;
+export type AppDispatch = typeof store.dispatch;
 
-// export const store = createStore(rootReducer,applyMiddleware(thunk));
+export const store = createStore(rootReducer,applyMiddleware(thunk));
 
-// export default store;
+export default store;
