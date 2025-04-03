@@ -1,4 +1,6 @@
+import { PayloadAction } from "@reduxjs/toolkit";
 import { Action, createStore } from "redux";
+
 
 const initialState = {
   balance: 0,
@@ -56,23 +58,20 @@ export default function accountReducer(
 }
 const store = createStore(accountReducer);
 
-function deposit(amount: number): depositAction {
-  return { type: "account/deposit", payload: amount };
+function deposit(amount: number):depositAction {
+  return { type: "account/deposit", payload:amount };
 }
-function withdraw(amount: number): withdrawAction {
-  return { type: "account/withdraw", payload: amount };
+function withdraw(amount: number):withdrawAction {
+  return { type: "account/withdraw",payload: amount };
 }
-function requestLoan(
-  amount: number,
-  purpose: string
-): requestLoanAction {
+function requestLoan(amount: number, purpose: string):requestLoanAction {
   return {
     type: "account/requestLoan",
     payload: { amount, purpose },
   };
 }
-function payLoan(): payLoanAction {
-  return { type: "account/payLoan" };
+function payLoan(){
+  return { type: "account/payLoan"};
 }
 
 console.log(store.getState());

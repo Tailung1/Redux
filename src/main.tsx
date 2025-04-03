@@ -4,7 +4,7 @@ import App from './App.tsx'
 import './index.css'
 import { Provider } from 'react-redux'
 import store from './store.ts'
-import accountReduce from './store.v1.ts'
+import accountReducer from './store.v1.ts'
 
 
 
