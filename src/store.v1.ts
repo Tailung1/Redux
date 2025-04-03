@@ -1,6 +1,4 @@
-import { PayloadAction } from "@reduxjs/toolkit";
 import { Action, createStore } from "redux";
-
 
 const initialState = {
   balance: 0,
@@ -41,8 +39,10 @@ export default function accountReducer(
     case "account/deposit":
       return { ...state, balance: state.balance + action.payload };
     case "account/withdraw":
+      if (action.payload > state.balance) return;
       return { ...state, balance: state.balance - action.payload };
     case "account/requestLoan":
+      if (state.loan > 0) return;
       return {
         ...state,
         loan: action.payload.amount,
@@ -54,24 +54,30 @@ export default function accountReducer(
         loan: 0,
         loanPurpose: "",
       };
+    default:
+      return state;
   }
 }
 const store = createStore(accountReducer);
 
-function deposit(amount: number):depositAction {
-  return { type: "account/deposit", payload:amount };
+function deposit(amount: number): depositAction {
+  return { type: "account/deposit", payload: amount };
 }
-function withdraw(amount: number):withdrawAction {
-  return { type: "account/withdraw",payload: amount };
+function withdraw(amount: number): withdrawAction {
+  return { type: "account/withdraw", payload: amount };
 }
-function requestLoan(amount: number, purpose: string):requestLoanAction {
+function requestLoan(
+  amount: number,
+  purpose: string
+): requestLoanAction {
   return {
     type: "account/requestLoan",
     payload: { amount, purpose },
   };
 }
-function payLoan(){
-  return { type: "account/payLoan"};
+function payLoan(): payLoanAction {
+  return { type: "account/payLoan" };
 }
-
+store.dispatch(deposit(1000));
+store.dispatch(requestLoan(1000, "buy a car"));
 console.log(store.getState());
