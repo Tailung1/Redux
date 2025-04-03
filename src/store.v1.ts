@@ -1,4 +1,5 @@
 import { Action, createStore } from "redux";
+// import { configureStore } from "@reduxjs/toolkit";
 
 const initialState = {
   balance: 0,
@@ -58,7 +59,7 @@ export default function accountReducer(
       return state;
   }
 }
-const store = createStore(accountReducer);
+export const store = createStore(accountReducer);
 
 function deposit(amount: number): depositAction {
   return { type: "account/deposit", payload: amount };
